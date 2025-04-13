@@ -2,7 +2,7 @@ import React from 'react';
 
 export const LoginPage: React.FC = () => {
   const handleGoogleLogin = () => {
-    window.location.href = "";
+    window.location.href = process.env.REACT_APP_API_URL as string;
   };
 
   return (
