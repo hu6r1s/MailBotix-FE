@@ -3,8 +3,17 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 interface GmailMessage {
-  id: string;
+  messageId: string;
   threadId: string;
+  date: string;
+  headers: {
+    subject: string;
+    from: string;
+  };
+  important: boolean;
+  hasAttachment: boolean;
+  starred: boolean;
+  unread: boolean;
 }
 
 const MailListPage: React.FC = () => {
@@ -57,8 +66,8 @@ const MailListPage: React.FC = () => {
       ) : (
         <ul>
           {emails.map((email) => (
-            <li key={email.id}>
-              ID: {email.id}, ThreadID: {email.threadId}
+            <li key={email.messageId}>
+              MessageID: {email.messageId}, ThreadID: {email.threadId}
             </li>
           ))}
         </ul>

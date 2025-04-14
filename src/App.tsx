@@ -53,18 +53,20 @@ const ProtectedRoute: React.FC = () => {
 
 function App() {
   return (
-    <Router>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          {/* 인증이 필요한 라우트 */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="/mail/list" element={<MailListPage />} />
-            <Route path="/" element={<Navigate to="/mail/list" replace />} />
-          </Route>
-          {/* 일치하는 경로 없을 시 */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Router>
+    <AuthProvider>
+      <Router>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            {/* 인증이 필요한 라우트 */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<MailListPage />} />
+              {/* <Route path="/" element={<Navigate to="/mail/list" replace />} /> */}
+            </Route>
+            {/* 일치하는 경로 없을 시 */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
   );
 }
 
