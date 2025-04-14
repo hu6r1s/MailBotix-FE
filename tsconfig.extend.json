@@ -10,6 +10,9 @@
       ],
       "@pages/*": [
         "src/pages/*"
+      ],
+      "@apis/*": [
+        "src/apis/*"
       ]
     }
   }

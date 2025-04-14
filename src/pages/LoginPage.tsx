@@ -1,8 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import apiClient from '@apis/axiosConfig';
 
 export const LoginPage: React.FC = () => {
-  const handleGoogleLogin = () => {
-    window.location.href = process.env.REACT_APP_API_URL as string;
+  const [error, setError] = useState<string | null>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const errorParam = queryParams.get('error');
+    if (errorParam) {
+      setError(`Login failed: ${errorParam}`);
+    }
+  }, [location]);
+  
+  const handleGoogleLogin = async () => {
+    try {
+      setError(null);
+      const response = await apiClient.get<string>('/auth/google/url');
+      const authUrl = response.data;
+      window.location.href = authUrl;
+    } catch(err) {
+      console.error('Error fetching Google Auth URL: ', err);
+      setError('Failed to start Google authentication. Please try again.');
+    }
   };
 
   return (
@@ -21,6 +43,7 @@ export const LoginPage: React.FC = () => {
           <span className="text-sm font-medium text-gray-700">
             Sign in with Google
           </span>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
         </button>
       </div>
     </div>
