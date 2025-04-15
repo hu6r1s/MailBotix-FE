@@ -5,7 +5,6 @@ import apiClient from '@apis/axiosConfig';
 export const LoginPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);

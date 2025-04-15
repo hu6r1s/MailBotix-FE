@@ -1,6 +1,8 @@
 import apiClient from '@apis/axiosConfig';
 import MailDetailPanel from '@components/MailDetailPanel';
+import MailDetailSkeleton from '@components/MailDetailSkeleton';
 import MailListPanel from '@components/MailListPanel';
+import MailListSkeleton from '@components/MailListSkeleton';
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
@@ -80,34 +82,51 @@ const MailListPage: React.FC = () => {
     };
   }, []);
 
-  if (loading) return <p>Loading emails...</p>;
-  if (error) return <p style={{ color: 'red' }}>{error}</p>;
-
   return (
     <div className="flex h-screen overflow-hidden relative">
-      {/* 왼쪽 패널 */}
-      <div style={{ width: sidebarWidth }} className="border-r border-gray-200 bg-white">
-        <MailListPanel emails={emails} onSelect={setSelectedEmail} onSelectMessage={setSelectedMessageId} />
-      </div>
+      {loading ? (
+        <>
+          <div style={{ width: sidebarWidth }} className="border-r border-gray-200 bg-white overflow-hidden">
+            <MailListSkeleton />
+          </div>
+          <div className="w-1 bg-gray-200" />
+          <div className="flex-1 overflow-hidden">
+            <MailDetailSkeleton />
+          </div>
+        </>
+      ) : error ? (
+        <div className="flex items-center justify-center w-full h-full text-red-500">
+          <p>{error}</p>
+          <button
+            onClick={handleLogout}
+            className="absolute top-4 right-6 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 z-20"
+          >
+            Logout
+          </button>
+        </div>
+      ) : (
+        <>
+          <div style={{ width: sidebarWidth }} className="border-r border-gray-200 bg-white">
+            <MailListPanel emails={emails} onSelect={setSelectedEmail} onSelectMessage={setSelectedMessageId} />
+          </div>
 
-      {/* 리사이저 */}
-      <div
-        className="w-1 bg-gray-300 cursor-col-resize hover:bg-gray-400 z-10"
-        onMouseDown={() => (isResizing.current = true)}
-      />
+          <div
+            className="w-1 bg-gray-300 cursor-col-resize hover:bg-gray-400 z-10"
+            onMouseDown={() => (isResizing.current = true)}
+          />
 
-      {/* 오른쪽 패널 */}
-      <div className="flex-1">
-        <MailDetailPanel messageId={selectedMessageId} />
-      </div>
+          <div className="flex-1">
+            <MailDetailPanel messageId={selectedMessageId} />
+          </div>
 
-      {/* 로그아웃 버튼 */}
-      <button
-        onClick={handleLogout}
-        className="absolute top-4 right-6 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 z-20"
-      >
-        Logout
-      </button>
+          <button
+            onClick={handleLogout}
+            className="absolute top-4 right-6 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 z-20"
+          >
+            Logout
+          </button>
+        </>
+      )}
     </div>
   );
 }
