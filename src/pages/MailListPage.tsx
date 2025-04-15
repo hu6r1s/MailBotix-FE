@@ -20,6 +20,7 @@ export interface GmailMessage {
 
 const MailListPage: React.FC = () => {
   const [emails, setEmails] = useState<GmailMessage[]>([]);
+  const [selectedMessageId, setSelectedMessageId] = useState<string | null>(null);
   const [selectedEmail, setSelectedEmail] = useState<GmailMessage | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -86,7 +87,7 @@ const MailListPage: React.FC = () => {
     <div className="flex h-screen overflow-hidden relative">
       {/* 왼쪽 패널 */}
       <div style={{ width: sidebarWidth }} className="border-r border-gray-200 bg-white">
-        <MailListPanel emails={emails} onSelect={setSelectedEmail} />
+        <MailListPanel emails={emails} onSelect={setSelectedEmail} onSelectMessage={setSelectedMessageId} />
       </div>
 
       {/* 리사이저 */}
@@ -97,7 +98,7 @@ const MailListPage: React.FC = () => {
 
       {/* 오른쪽 패널 */}
       <div className="flex-1">
-        <MailDetailPanel email={selectedEmail} />
+        <MailDetailPanel messageId={selectedMessageId} />
       </div>
 
       {/* 로그아웃 버튼 */}
