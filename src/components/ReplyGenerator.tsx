@@ -20,7 +20,7 @@ const ReplyGenerator: React.FC<ReplyGeneratorProps> = ({ emailBody, onReplyGener
         emailContent: emailBody,
         tone: 'polite',
       });
-      onReplyGenerated(response.data);
+      onReplyGenerated(response.data.reply);
     } catch (err: any) {
       console.error('Reply generation failed:', err);
       setError('답장 생성에 실패했습니다.');

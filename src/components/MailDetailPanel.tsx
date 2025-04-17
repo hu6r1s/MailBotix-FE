@@ -86,6 +86,7 @@ const MailDetailPanel: React.FC<Props> = ({ messageId }) => {
     };
 
     fetchDetail();
+    setReplyContent('');
   }, [messageId]);
 
   const handleSendReply = async () => {
