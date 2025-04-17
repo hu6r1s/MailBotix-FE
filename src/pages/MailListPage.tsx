@@ -8,13 +8,11 @@ import { useNavigate } from 'react-router-dom';
 
 export interface GmailMessage {
   messageId: string;
-  threadId: string;
   date: string;
   headers: {
     subject: string;
     from: string;
   };
-  important: boolean;
   hasAttachment: boolean;
   starred: boolean;
   unread: boolean;
