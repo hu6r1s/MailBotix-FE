@@ -183,7 +183,7 @@ const MailDetailPanel: React.FC<Props> = ({ messageId }) => {
           </div>
           <button
             onClick={handleSendReply}
-            disabled={sending || !replyContent.trim()}
+            disabled={sending || !replyContent}
             className="flex items-center px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed"
           >
             <Send size={16} className="mr-1" />
