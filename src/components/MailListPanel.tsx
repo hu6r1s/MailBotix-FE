@@ -4,16 +4,15 @@ import { Star, StarOff, Paperclip } from 'lucide-react';
 
 interface Props {
   emails: GmailMessage[];
-  onSelect: (email: GmailMessage | null) => void;
-  onSelectMessage: (messageId: string) => void;
+  onSelectMessage: (messageId: string | null)  => void;
 }
 
-const MailListPanel: React.FC<Props> = ({ emails, onSelect, onSelectMessage }) => {
+const MailListPanel: React.FC<Props> = ({ emails, onSelectMessage }) => {
   return (
     <div className="h-full overflow-y-auto w-full bg-white">
       <div
         className="text-xl font-semibold p-4 border-b cursor-pointer hover:bg-gray-50"
-        onClick={() => onSelect(null)}
+        onClick={() => onSelectMessage(null)}
       >Inbox</div>
       <ul>
         {emails.map((email) => (
@@ -23,7 +22,6 @@ const MailListPanel: React.FC<Props> = ({ emails, onSelect, onSelectMessage }) =
               email.unread ? 'font-bold bg-blue-50' : ''
             }`}
             onClick={() => {
-              onSelect(email);
               onSelectMessage(email.messageId);
             }
           }>

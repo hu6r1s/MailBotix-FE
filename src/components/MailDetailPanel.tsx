@@ -132,14 +132,14 @@ const MailDetailPanel: React.FC<Props> = ({ messageId }) => {
   }
 
   return (
-    <div className="h-full p-6 overflow-y-auto">
+    <div className="h-full w-full p-6 overflow-y-auto">
       <h2 className="text-2xl font-semibold mb-2">{email.headers.subject}</h2>
       <p className="text-sm text-gray-600 mb-4">
         From: {email.headers.from}<br />
         Date: {email.headers.date}
       </p>
 
-      <div className="text-gray-800 whitespace-pre-wrap mb-6">
+      <div className="text-gray-800 whitespace-pre-wrap break-words mb-6">
         {email.body}
       </div>
 

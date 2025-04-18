@@ -41,6 +41,7 @@ const MailListPage: React.FC = () => {
           navigate('/login');
         } else {
           setError('Failed to load emails.');
+          navigate('/login');
         }
       } finally {
         setLoading(false);
@@ -103,9 +104,9 @@ const MailListPage: React.FC = () => {
           </button>
         </div>
       ) : (
-        <>
-          <div style={{ width: sidebarWidth }} className="border-r border-gray-200 bg-white">
-            <MailListPanel emails={emails} onSelect={setSelectedEmail} onSelectMessage={setSelectedMessageId} />
+        <div className="flex h-screen overflow-hidden relative w-full">
+          <div style={{ width: sidebarWidth }} className="border-r border-gray-200 bg-white w-1/3">
+            <MailListPanel emails={emails} onSelectMessage={setSelectedMessageId} />
           </div>
 
           <div
@@ -113,7 +114,7 @@ const MailListPage: React.FC = () => {
             onMouseDown={() => (isResizing.current = true)}
           />
 
-          <div className="flex-1">
+          <div className="flex-1 w-2/3">
             <MailDetailPanel messageId={selectedMessageId} />
           </div>
 
@@ -123,7 +124,7 @@ const MailListPage: React.FC = () => {
           >
             Logout
           </button>
-        </>
+        </div>
       )}
     </div>
   );
