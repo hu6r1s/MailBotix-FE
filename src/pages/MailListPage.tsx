@@ -3,7 +3,7 @@ import MailDetailPanel from '@components/MailDetailPanel';
 import MailDetailSkeleton from '@components/MailDetailSkeleton';
 import MailListPanel from '@components/MailListPanel';
 import MailListSkeleton from '@components/MailListSkeleton';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export interface GmailMessage {
@@ -27,7 +27,7 @@ const MailListPage: React.FC = () => {
   const isResizing = useRef<boolean>(false);
   const navigate = useNavigate();
   const [pageSize, setPageSize] = useState<number>(10);
-  
+
   const handlePageSizeChange = (newSize: number) => {
     setPageSize(newSize);
     setSelectedMessageId(null);
@@ -92,9 +92,9 @@ const MailListPage: React.FC = () => {
         <>
           <div style={{ width: sidebarWidth }} className="border-r border-gray-200 bg-white overflow-hidden">
             <div className="flex items-center justify-between p-4 border-b animate-pulse">
-                <div className="h-6 w-1/4 bg-gray-300 rounded"></div>
-                <div className="h-8 w-20 bg-gray-300 rounded"></div>
-             </div>
+              <div className="h-6 w-1/4 bg-gray-300 rounded"></div>
+              <div className="h-8 w-20 bg-gray-300 rounded"></div>
+            </div>
             <MailListSkeleton />
           </div>
           <div className="w-1 bg-gray-200" />
