@@ -4,6 +4,7 @@ import MailListPage from "@pages/MailListPage";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { Navigate, Outlet, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import './App.css';
+import { AppPasswordPage } from "@pages/AppPasswordPage";
 
 interface AuthStatus {
   loading: boolean;
@@ -60,6 +61,7 @@ function App() {
           {/* 인증이 필요한 라우트 */}
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<MailListPage />} />
+            <Route path="/app-password" element={<AppPasswordPage />} />
             {/* <Route path="/" element={<Navigate to="/mail/list" replace />} /> */}
           </Route>
           {/* 일치하는 경로 없을 시 */}

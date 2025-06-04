@@ -13,6 +13,9 @@
       ],
       "@apis/*": [
         "src/apis/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
       ]
     }
   }
