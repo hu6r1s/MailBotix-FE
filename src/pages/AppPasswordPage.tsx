@@ -6,8 +6,10 @@ const SECRET_KEY = CryptoJS.enc.Utf8.parse(process.env.REACT_APP_ENCRYPTION_KEY 
 const IV = CryptoJS.enc.Utf8.parse(process.env.REACT_APP_IV as string);
 
 const isValidPassword = (pw: string): boolean => {
-  const regex = /^(?=.*[A-Za-z])(?=.*\d)(?:(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])[A-Za-z\d!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8,16}|[A-Za-z\d]{8,16})$/;
-  return regex.test(pw);
+  const accountPasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+  const appPasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+  const combinedRegex = new RegExp(`${accountPasswordRegex.source}|${appPasswordRegex.source}`);
+  return combinedRegex.test(pw);
 };
 
 export const AppPasswordPage: React.FC = () => {
@@ -48,8 +50,8 @@ export const AppPasswordPage: React.FC = () => {
       <div className="bg-white p-6 rounded-xl shadow-md text-left w-full max-w-md">
         <h2 className="text-lg font-bold mb-4">계정 패스워드 / 앱 비밀번호를 입력해주세요</h2>
         <p className="text-sm text-gray-600 mb-4">
-          네이버 메일 API가 없어 <strong>IMAP</strong>을 사용합니다. 이를 위해
-          <strong>계정 패스워드</strong>나<strong> 앱 비밀번호</strong>가 필요합니다.<br /><br />
+          네이버 메일 API가 없어 <strong>IMAP</strong>을 사용합니다. <br/> 이를 위해
+          <strong> 계정 패스워드</strong>나<strong> 앱 비밀번호</strong>가 필요합니다.<br /><br />
           <strong>입력된 비밀번호는 안전하게 암호화됩니다.</strong>
         </p>
         <a
@@ -64,7 +66,7 @@ export const AppPasswordPage: React.FC = () => {
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <div>
             <label htmlFor="appPassword" className="block text-sm font-medium text-gray-700">
-              앱 비밀번호
+              비밀번호
             </label>
             <input
               type="password"
