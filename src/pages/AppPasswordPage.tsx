@@ -2,10 +2,11 @@ import CryptoJS from 'crypto-js';
 import Cookies from 'js-cookie';
 import React, { useState } from 'react';
 
-const SECRET_KEY = process.env.REACT_APP_ENCRYPTION_KEY as string;
+const SECRET_KEY = CryptoJS.enc.Utf8.parse(process.env.REACT_APP_ENCRYPTION_KEY as string);
+const IV = CryptoJS.enc.Utf8.parse(process.env.REACT_APP_IV as string);
 
 const isValidPassword = (pw: string): boolean => {
-  const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])[A-Za-z\d!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8,16}$/;
+  const regex = /^(?=.*[A-Za-z])(?=.*\d)(?:(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])[A-Za-z\d!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8,16}|[A-Za-z\d]{8,16})$/;
   return regex.test(pw);
 };
 
@@ -18,7 +19,11 @@ export const AppPasswordPage: React.FC = () => {
 
     if (!isValidPassword(password)) return alert('계정 패스워드 또는 앱 비밀번호를 입력해주세요.');
 
-    const encrypted = CryptoJS.AES.encrypt(password, SECRET_KEY).toString();
+    const encrypted = CryptoJS.AES.encrypt(password, SECRET_KEY, {
+      iv: IV,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7,
+    }).ciphertext.toString(CryptoJS.enc.Base64);
 
     Cookies.set('app_password', encrypted, { expires: 1, secure: true, sameSite: "Lax", path: "/" });
     setSubmitted(true);
